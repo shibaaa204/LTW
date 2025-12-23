@@ -1,0 +1,22 @@
+.user-detail-card {
+    margin: 32px auto !important;
+    max-width: 600px;
+}
+
+.user-detail-name {
+    font-weight: bold !important;
+}
+
+.user-description {
+    margin-bottom: 16px !important;
+    font-style: italic;
+}
+
+.user-location {
+    margin-bottom: 16px !important;
+}
+
+.detail-action-box {
+    display: flex;
+    justify-content: flex-start;
+}

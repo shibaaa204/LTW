@@ -1,0 +1,30 @@
+.photo-list-container {
+    max-width: 800px;
+    margin: 32px auto !important; 
+}
+
+.loading-box {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+}
+
+.photo-card {
+    margin-bottom: 32px !important; 
+}
+
+.photo-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 16px; 
+    border-radius: 4px;  
+    object-fit: contain;
+    max-height: 500px;
+}
+
+.comment-input-area {
+    display: flex;
+    gap: 8px;           
+    margin-top: 16px;   
+}

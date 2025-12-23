@@ -1,0 +1,29 @@
+.login-grid-container {
+    min-height: 60vh;
+}
+
+.login-paper {
+    border-radius: 8px !important;
+    overflow: hidden;
+}
+
+.tab-container {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.form-box {
+    padding: 32px;
+}
+
+.form-title {
+    font-weight: bold !important;
+    margin-bottom: 0.35em !important;
+}
+
+.alert-message {
+    margin-bottom: 16px !important;
+}
+
+.submit-button {
+    margin-top: 24px !important;
+}

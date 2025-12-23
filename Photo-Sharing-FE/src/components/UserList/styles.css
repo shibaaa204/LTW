@@ -1,0 +1,38 @@
+.user-list-title {
+    margin: 16px 0 16px 16px !important;
+    font-weight: bold !important;
+    color: #1976d2;
+}
+
+.user-avatar {
+    background-color: #1976d2 !important;
+}
+
+.user-name {
+    font-weight: bold !important;
+    color: #333;
+}
+
+.bubble {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: white;
+    min-width: 20px;
+}
+
+.photo-bubble {
+    background-color: #11a609;
+}
+
+.comment-bubble {
+    background-color: #d8132e;
+}
+
+.user-list-item:hover {
+    background-color: #f5f5f5;
+}
