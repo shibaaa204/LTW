@@ -37,7 +37,11 @@ router.get("/photosOfUser/:id", async (req, res) => {
                 user_id: userId,
                 comments: comments,
                 file_name: photo.file_name,
-                date_time: photo.date_time
+                date_time: photo.date_time,
+                // number of likes
+                likes_count: photo.likes ? photo.likes.length : 0,
+                // whether the current session user has liked this photo
+                liked: req.session && req.session.user_id && photo.likes ? photo.likes.some(id => String(id) === String(req.session.user_id)) : false
             })
         }
         // console.log(newPhotos)
@@ -79,6 +83,44 @@ router.post("/photos/new", upload.single('file'), async (req, res) => {
     } catch (error) {
         console.error("Error uploading photo:", error)
         res.status(500).send({ message: "Internal Server Error", error })
+    }
+})
+
+// API: Toggle like for a photo (requires authentication)
+router.post('/photos/:id/like', async (req, res) => {
+    const photoId = req.params.id
+    const userId = req.session && req.session.user_id
+
+    if (!userId) {
+        return res.status(401).json({ error: 'Unauthorized' })
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(photoId)) {
+        return res.status(400).json({ error: 'Invalid Photo Id format' })
+    }
+
+    try {
+        const photo = await Photo.findById(photoId)
+        if (!photo) return res.status(404).json({ error: 'Photo not found' })
+
+        const userObjId =new mongoose.Types.ObjectId(userId)
+        photo.likes = photo.likes || []
+
+        const already = photo.likes.some(id => String(id) === String(userObjId))
+        if (already) {
+            // unlike
+            photo.likes = photo.likes.filter(id => String(id) !== String(userObjId))
+        } else {
+            // like
+            photo.likes.push(userObjId)
+        }
+
+        await photo.save()
+
+        return res.json({ liked: !already, likes_count: photo.likes.length })
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({ error: 'Internal server error' })
     }
 })
 

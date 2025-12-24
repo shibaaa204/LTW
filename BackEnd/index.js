@@ -21,15 +21,15 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     },
   })
 );
 
 app.use(
   cors({
-    origin: "https://6xm85y-3000.csb.app",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
