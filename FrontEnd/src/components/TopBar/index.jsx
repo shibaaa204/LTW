@@ -39,14 +39,14 @@ function TopBar({ context, user, setUser, setContext }) {
                 Hi {user.first_name}
               </Typography>
 
-              <Button
+              {/* <Button
                 color="inherit"
                 component={Link}
                 to="/upload"
                 sx={{ marginRight: 1, border: "1px solid white" }}
               >
                 Add Photo
-              </Button>
+              </Button> */}
 
               <Button color="inherit" onClick={handleLogout}>
                 Logout

@@ -138,7 +138,7 @@ function UserPhotos({ setContext, currentUser, onRefresh }) {
                                 </Button>
                             </Box>
 
-                            {myCommentCount > 0 && (
+                            {/* {myCommentCount > 0 && (
                                 <Chip 
                                     label={`Your comments: ${myCommentCount}`} 
                                     color="primary" 
@@ -146,7 +146,7 @@ function UserPhotos({ setContext, currentUser, onRefresh }) {
                                     size="small"
                                     sx={{ marginRight: 1 }}
                                 />
-                            )}
+                            )} */}
                         </CardActions>
 
                         <Collapse in={expandedComments[photo._id]} timeout="auto" unmountOnExit>
