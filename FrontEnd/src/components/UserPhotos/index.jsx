@@ -3,9 +3,11 @@ import { useParams } from 'react-router-dom'
 import {
     Card, CardContent, CardHeader, Divider, Avatar, Box, Alert, CircularProgress, TextField, Button, CardActions, Collapse, Typography, Chip
 } from '@mui/material'
+import IconButton from '@mui/material/IconButton'
 import { red } from '@mui/material/colors'
 import SendIcon from '@mui/icons-material/Send'
 import CommentIcon from '@mui/icons-material/Comment'
+import LikeIcon from '@mui/icons-material/ThumbUp';
 
 import fetchModel from '../../lib/fetchModelData'
 import { BE_URL } from '../../lib/config'
@@ -46,6 +48,22 @@ function UserPhotos({ setContext, currentUser, onRefresh }) {
 
     const handleExpandClick = (photoId) => {
         setExpandedComments(prev => ({ ...prev, [photoId]: !prev[photoId] }))
+    }
+
+    const handleLike = async (photoId) => {
+        try {
+            const res = await fetch(`${BE_URL}/photos/${photoId}/like`, {
+                method: 'POST',
+                credentials: 'include'
+            })
+            if (!res.ok) throw new Error('Like failed')
+            const data = await res.json()
+            // Update local state
+            setPhotos(prev => prev.map(p => p._id === photoId ? { ...p, likes_count: data.likes_count, liked: data.liked } : p))
+            if (onRefresh) onRefresh()
+        } catch (err) {
+            console.error('Error liking photo', err)
+        }
     }
 
     const handleCommentSubmit = async (photoId) => {
@@ -103,15 +121,22 @@ function UserPhotos({ setContext, currentUser, onRefresh }) {
                         </CardContent>
 
                         <CardActions disableSpacing sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Button 
-                                startIcon={<CommentIcon />}
-                                onClick={() => handleExpandClick(photo._id)}
-                                size="small"
-                            >
-                                {expandedComments[photo._id] 
-                                    ? "Hide Comments" 
-                                    : `Show Comments (${photo.comments?.length || 0})`}
-                            </Button>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                <IconButton aria-label="like" size="small" onClick={() => handleLike(photo._id)} color={photo.liked ? 'primary' : 'default'}>
+                                    <LikeIcon />
+                                </IconButton>
+                                <Typography variant="body2">{photo.likes_count || 0}</Typography>
+
+                                <Button 
+                                    startIcon={<CommentIcon />}
+                                    onClick={() => handleExpandClick(photo._id)}
+                                    size="small"
+                                >
+                                    {expandedComments[photo._id] 
+                                        ? "Hide Comments" 
+                                        : `Show Comments (${photo.comments?.length || 0})`}
+                                </Button>
+                            </Box>
 
                             {myCommentCount > 0 && (
                                 <Chip 
