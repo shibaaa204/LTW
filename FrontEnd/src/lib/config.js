@@ -1,1 +1,1 @@
-export const BE_URL = "http://localhost:8081"
+export const BE_URL = "https://6xm85y-8081.csb.app";
